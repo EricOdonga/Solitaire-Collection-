@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: cd SolitaireLib && npm ci || npm install
       - name: Build
-        run: cd SolitaireLib && npm run build
+        run: cd SolitaireLib && rm -rf .parcel-cache && npm run build -- --no-cache
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
