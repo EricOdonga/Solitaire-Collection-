@@ -5,12 +5,10 @@ import { PileView } from "~CardLib/View/PileView";
 import { Rect } from "~CardLib/View/Rect";
 import { IGame } from "../Model/IGame";
 
-const scale = 0.7;
-const margin = 1 * scale;
-const sizeY = 20 * scale;
-const sizeX = sizeY / 1.555555555555;
-
 export class GamePresenter extends GamePresenterBase<IGame> {
+    private sizeY = 20;
+    private sizeX = 20 / 1.555555555555;
+
     private readonly stockPile_: PileView;
     private readonly foundationPile_: PileView;
     private readonly tableauPiles_: PileView[] = [];
@@ -25,6 +23,8 @@ export class GamePresenter extends GamePresenterBase<IGame> {
 
     constructor(game: IGame, rootView: IView) {
         super(game, rootView);
+
+        this.updateSizes_();
 
         // create piles:
         {
@@ -54,7 +54,16 @@ export class GamePresenter extends GamePresenterBase<IGame> {
         this.relayoutAll_();
     }
 
+    private updateSizes_() {
+        const aspect = this.rootView_.element.clientWidth / this.rootView_.element.clientHeight;
+        const tableSize = aspect < 1.15 ? 8 : 9;
+        const { sizeX, sizeY } = this.calculateCardSize(tableSize, 1);
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
     protected onResize_() {
+        this.updateSizes_();
         this.layoutPiles_();
         this.relayoutAll_();
     }
@@ -69,24 +78,27 @@ export class GamePresenter extends GamePresenterBase<IGame> {
             vExpand = 1.5;
         }
 
+        const scale = this.sizeY / 20;
+        const scaledMargin = 1 * scale;
+
         const xPos = (colIndex: number) => {
-            return (colIndex - 0.5 * (tableSize - 1)) * (sizeX + margin);
+            return (colIndex - 0.5 * (tableSize - 1)) * (this.sizeX + scaledMargin);
         };
 
-        const topY = vExpand * -35 + margin;
+        const topY = vExpand * -35 * scale + scaledMargin;
 
         // Foundation (Stack 4) is placed at the starting horizontal position
         {
             const pile = this.game_.foundation;
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(colStart), topY);
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(colStart), topY);
         }
 
         // Tableau piles (0-3) are positioned iteratively to the right of the foundation, fanning down
         for (let i = 0; i < this.game_.tableaux.length; ++i) {
             const pile = this.game_.tableaux[i] ?? error();
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(colStart + 1 + i), topY);
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(colStart + 1 + i), topY);
             pileView.fanYDown = 3.5 * scale;
             pileView.fanYUp = vExpand * 3.5 * scale;
         }
@@ -95,7 +107,7 @@ export class GamePresenter extends GamePresenterBase<IGame> {
         {
             const pile = this.game_.stock;
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(colStart + 5), topY);
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(colStart + 5), topY);
         }
     }
 }

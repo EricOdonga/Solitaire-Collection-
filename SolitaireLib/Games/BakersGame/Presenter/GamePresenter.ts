@@ -5,12 +5,10 @@ import { PileView } from "~CardLib/View/PileView";
 import { Rect } from "~CardLib/View/Rect";
 import { IGame } from "../Model/IGame";
 
-const scale = 1.0;
-const margin = 1 * scale;
-const sizeY = 20 * scale;
-const sizeX = sizeY / 1.555555555555;
-
 export class GamePresenter extends GamePresenterBase<IGame> {
+    private sizeY = 20;
+    private sizeX = 20 / 1.555555555555;
+
     private readonly tableauPiles_: PileView[] = [];
     private readonly freecellPiles_: PileView[] = [];
     private readonly foundationPiles_: PileView[] = [];
@@ -25,6 +23,8 @@ export class GamePresenter extends GamePresenterBase<IGame> {
 
     constructor(game: IGame, rootView: IView) {
         super(game, rootView);
+
+        this.updateSizes_();
 
         // Tableau piles 0-7:
         for (let i = 0; i < this.game_.tableaux.length; ++i) {
@@ -59,7 +59,14 @@ export class GamePresenter extends GamePresenterBase<IGame> {
         this.relayoutAll_();
     }
 
+    private updateSizes_() {
+        const { sizeX, sizeY } = this.calculateCardSize(8, 1);
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
     protected onResize_() {
+        this.updateSizes_();
         this.layoutPiles_();
         this.relayoutAll_();
     }
@@ -72,33 +79,36 @@ export class GamePresenter extends GamePresenterBase<IGame> {
             vExpand = 1.5;
         }
 
+        const scale = this.sizeY / 20;
+        const scaledMargin = 1 * scale;
+
         const xPos = (colIndex: number) => {
-            return (colIndex - 0.5 * (tableSize - 1)) * (sizeX + margin);
+            return (colIndex - 0.5 * (tableSize - 1)) * (this.sizeX + scaledMargin);
         };
 
-        const topY = vExpand * -35 + margin;
-        const bottomY = topY + sizeY + margin * 2;
+        const topY = vExpand * -35 * scale + scaledMargin;
+        const bottomY = topY + this.sizeY + scaledMargin * 2;
 
         // Row 1 (Top): Free cells on left side (columns 0-3), Foundations on right side (columns 4-7)
         for (let i = 0; i < this.game_.freecells.length; ++i) {
             const pile = this.game_.freecells[i] ?? error();
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(i), topY);
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(i), topY);
         }
 
         for (let i = 0; i < this.game_.foundations.length; ++i) {
             const pile = this.game_.foundations[i] ?? error();
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(i + 4), topY);
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(i + 4), topY);
         }
 
         // Row 2 (Bottom): Tableau stacks 0-7 arranged horizontally directly beneath
         for (let i = 0; i < this.game_.tableaux.length; ++i) {
             const pile = this.game_.tableaux[i] ?? error();
             const pileView = this.getPileView_(pile);
-            pileView.rect = new Rect(sizeX, sizeY, xPos(i), bottomY);
-            pileView.fanYDown = 3.5;
-            pileView.fanYUp = vExpand * 3.5;
+            pileView.rect = new Rect(this.sizeX, this.sizeY, xPos(i), bottomY);
+            pileView.fanYDown = 3.5 * scale;
+            pileView.fanYUp = vExpand * 3.5 * scale;
         }
     }
 }
