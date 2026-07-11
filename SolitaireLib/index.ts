@@ -8,6 +8,7 @@ import ClockEngine from "~Games/ClockEngine/GameInfo";
 import AcesUp from "~Games/AcesUp/GameInfo";
 import Calculation from "~Games/Calculation/GameInfo";
 import Canfield from "~Games/Canfield/GameInfo";
+import FortyEight from "~Games/FortyEight/GameInfo";
 
 const gameInfos = new Map<string, IGameInfo>();
 gameInfos.set(Klondike.gameId, Klondike);
@@ -17,6 +18,7 @@ gameInfos.set(ClockEngine.gameId, ClockEngine);
 gameInfos.set(AcesUp.gameId, AcesUp);
 gameInfos.set(Calculation.gameId, Calculation);
 gameInfos.set(Canfield.gameId, Canfield);
+gameInfos.set(FortyEight.gameId, FortyEight);
 
 window.addEventListener("load", () => {
     const tableHolder = document.getElementById("tableHolder") ?? document.body;
