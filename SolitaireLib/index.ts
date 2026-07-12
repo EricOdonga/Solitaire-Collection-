@@ -25,9 +25,11 @@ import TriPeaks from "~Games/TriPeaks/GameInfo";
 import Scorpion from "~Games/Scorpion/GameInfo";
 import SimpleSimon from "~Games/SimpleSimon/GameInfo";
 import BeleagueredCastle from "~Games/BeleagueredCastle/GameInfo";
+import StreetsAndAlleys from "~Games/StreetsAndAlleys/GameInfo";
 
 const gameInfos = new Map<string, IGameInfo>();
 gameInfos.set(BeleagueredCastle.gameId, BeleagueredCastle);
+gameInfos.set(StreetsAndAlleys.gameId, StreetsAndAlleys);
 gameInfos.set(Klondike.gameId, Klondike);
 gameInfos.set(KlondikeEx.gameId, KlondikeEx);
 gameInfos.set(Pyramid.gameId, Pyramid);
