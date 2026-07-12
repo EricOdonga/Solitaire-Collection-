@@ -41,6 +41,7 @@ import Terrace from "~Games/Terrace/GameInfo";
 import Accordion from "~Games/Accordion/GameInfo";
 import Westcliff from "~Games/Westcliff/GameInfo";
 import BlackHole from "~Games/BlackHole/GameInfo";
+import Osmosis from "~Games/Osmosis/GameInfo";
 
 const gameInfos = new Map<string, IGameInfo>();
 gameInfos.set(PussInTheCorner.gameId, PussInTheCorner);
@@ -83,6 +84,7 @@ gameInfos.set(Sultan.gameId, Sultan);
 gameInfos.set(Terrace.gameId, Terrace);
 gameInfos.set(Accordion.gameId, Accordion);
 gameInfos.set(BlackHole.gameId, BlackHole);
+gameInfos.set(Osmosis.gameId, Osmosis);
 
 window.addEventListener("load", () => {
     const tableHolder = document.getElementById("tableHolder") ?? document.body;
