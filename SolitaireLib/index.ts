@@ -18,6 +18,7 @@ import Gypsy from "~Games/Gypsy/GameInfo";
 import Maze from "~Games/Maze/GameInfo";
 import FortyThieves from "~Games/FortyThieves/GameInfo";
 import Spider from "~Games/Spider/GameInfo";
+import Spiderette from "~Games/Spiderette/GameInfo";
 import TriPeaks from "~Games/TriPeaks/GameInfo";
 import Scorpion from "~Games/Scorpion/GameInfo";
 
@@ -39,6 +40,7 @@ gameInfos.set(Gypsy.gameId, Gypsy);
 gameInfos.set(Maze.gameId, Maze);
 gameInfos.set(FortyThieves.gameId, FortyThieves);
 gameInfos.set(Spider.gameId, Spider);
+gameInfos.set(Spiderette.gameId, Spiderette);
 gameInfos.set(TriPeaks.gameId, TriPeaks);
 gameInfos.set(Scorpion.gameId, Scorpion);
 
