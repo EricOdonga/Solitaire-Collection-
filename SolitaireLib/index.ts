@@ -3,6 +3,7 @@ import { IGameInfo } from "~CardLib/IGameInfo";
 import { IGamePresenter } from "~CardLib/Presenter/IGamePresenter";
 import Klondike from "~Games/Klondike/GameInfo";
 import Cruel from "~Games/Cruel/GameInfo";
+import PussInTheCorner from "~Games/PussInTheCorner/GameInfo";
 import KlondikeEx from "~Games/KlondikeEx/GameInfo";
 import Canister from "~Games/Canister/GameInfo";
 import Agnes from "~Games/Agnes/GameInfo";
@@ -40,6 +41,7 @@ import Accordion from "~Games/Accordion/GameInfo";
 import Westcliff from "~Games/Westcliff/GameInfo";
 
 const gameInfos = new Map<string, IGameInfo>();
+gameInfos.set(PussInTheCorner.gameId, PussInTheCorner);
 gameInfos.set(Westcliff.gameId, Westcliff);
 gameInfos.set(Cruel.gameId, Cruel);
 gameInfos.set(BeleagueredCastle.gameId, BeleagueredCastle);
