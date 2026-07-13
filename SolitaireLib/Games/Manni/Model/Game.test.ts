@@ -36,16 +36,22 @@ describe("Manni Game Model", () => {
     });
 
     it("should deal 12 cards to each player and place remaining 12 in the Manni pile", () => {
-        const restartGen = game.restart(54321);
-        let res = restartGen.next();
-        while (!res.done) {
-            res = restartGen.next();
-        }
+        const originalRandom = Math.random;
+        Math.random = () => 0.9; // Forces roundStarterIndex = 2 (Human acts first, pausing exchange phase immediately)
+        try {
+            const restartGen = game.restart(54321);
+            let res = restartGen.next();
+            while (!res.done) {
+                res = restartGen.next();
+            }
 
-        expect(game.handPiles[0].length).toBe(12);
-        expect(game.handPiles[1].length).toBe(12);
-        expect(game.handPiles[2].length).toBe(12);
-        expect(game.manniPile.length).toBe(12);
+            expect(game.handPiles[0].length).toBe(12);
+            expect(game.handPiles[1].length).toBe(12);
+            expect(game.handPiles[2].length).toBe(12);
+            expect(game.manniPile.length).toBe(12);
+        } finally {
+            Math.random = originalRandom;
+        }
     });
 
     it("should rotate Trump suit correctly across rounds and Visually flip the 2 indicator card", () => {
