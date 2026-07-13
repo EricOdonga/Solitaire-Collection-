@@ -43,8 +43,10 @@ import Accordion from "~Games/Accordion/GameInfo";
 import Westcliff from "~Games/Westcliff/GameInfo";
 import BlackHole from "~Games/BlackHole/GameInfo";
 import Osmosis from "~Games/Osmosis/GameInfo";
+import LaBelleLucie from "~Games/LaBelleLucie/GameInfo";
 
 const gameInfos = new Map<string, IGameInfo>();
+gameInfos.set(LaBelleLucie.gameId, LaBelleLucie);
 gameInfos.set(PussInTheCorner.gameId, PussInTheCorner);
 gameInfos.set(Westcliff.gameId, Westcliff);
 gameInfos.set(Cruel.gameId, Cruel);
