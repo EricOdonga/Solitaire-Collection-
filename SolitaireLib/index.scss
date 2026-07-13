@@ -356,3 +356,5 @@ div#buttons button {
 @media screen and (max-width: 600px), screen and (max-height: 600px) {
     @include cardFaces("bridge3-plain-super-qr");
 }
+
+// Integrated duplicate standard card-face combinations for CrazyQuilt, mapped to standard suit & rank classes.
