@@ -188,8 +188,12 @@ export abstract class GameBase implements IGameBase {
 
             let statesVisited = 0;
             const maxStates = 150;
+            const startTime = typeof performance !== "undefined" ? performance.now() : Date.now();
 
             while (openList.length > 0 && statesVisited < maxStates) {
+                if ((typeof performance !== "undefined" ? performance.now() : Date.now()) - startTime > 50) {
+                    break;
+                }
                 openList.sort((a, b) => b.score - a.score);
                 const current = openList.shift()!;
                 statesVisited++;
@@ -286,6 +290,7 @@ export abstract class GameBase implements IGameBase {
         const savedGamesStarted = this.gamesStarted;
 
         if (winnable) {
+            const startTime = typeof performance !== "undefined" ? performance.now() : Date.now();
             let currentSeed = seed;
             let found = false;
             const maxAttempts = 20;
@@ -298,6 +303,10 @@ export abstract class GameBase implements IGameBase {
                     break;
                 }
                 currentSeed = (currentSeed + 1) % 2147483647;
+
+                if ((typeof performance !== "undefined" ? performance.now() : Date.now()) - startTime > 100) {
+                    break;
+                }
             }
         }
 
